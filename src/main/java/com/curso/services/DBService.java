@@ -2,6 +2,7 @@ package com.curso.services;
 
 import com.curso.domains.Medico;
 import com.curso.domains.Paciente;
+import com.curso.domains.enums.Status;
 import com.curso.repositories.MedicoRepository;
 import com.curso.repositories.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,22 @@ public class DBService {
     private MedicoRepository medicoRepo;
 
     public void initDB(){
-        Paciente paciente01 = new Paciente(0, "Guilherme", LocalDate.now(),
-                new BigDecimal("800.00"));
-        Paciente paciente02 = new Paciente(0, "Ronaldinho", LocalDate.now(),
-                new BigDecimal("1200.00"));
 
-        Medico medico01 = new Medico(0, "Paulo Muzy", LocalDate.now(),
-                new BigDecimal("7500.00"));
-        Medico medico02 = new Medico(0,"Ben Carson", LocalDate.now(),
-                new BigDecimal("15000.00"));
+        Medico medico01 = new Medico(null, "Paulo Muzy", LocalDate.now(),
+                new BigDecimal("7500"));
+        Medico medico02 = new Medico(null,"Ben Carson", LocalDate.now(),
+                new BigDecimal("15000"));
+
+        medicoRepo.save(medico01);
+        medicoRepo.save(medico02);
+
+
+        Paciente paciente01 = new Paciente(null, "Guilherme", LocalDate.now(),
+                new BigDecimal("800"),Status.ALTA, medico01);
+        Paciente paciente02 = new Paciente(null, "Ronaldinho", LocalDate.now(),
+                new BigDecimal("1200"),Status.INTERNADO, medico02);
 
         pacienteRepo.save(paciente01);
         pacienteRepo.save(paciente02);
-        medicoRepo.save(medico01);
-        medicoRepo.save(medico02);
     }
 }

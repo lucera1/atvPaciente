@@ -1,6 +1,8 @@
 package com.curso.domains;
 
+import com.curso.domains.dtos.MedicoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +10,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="medico")
@@ -15,7 +20,7 @@ public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_medico")
-    private long id;
+    private Integer id;
 
     @NotNull @NotBlank
     private String nome;
@@ -24,32 +29,46 @@ public class Medico {
     private LocalDate dataContratacao;
 
     @NotNull
-    @Digits(integer = 15, fraction = 3)
+    @Digits(integer = 15, fraction = 2)
     private BigDecimal salario;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "medico")
+    private List<Paciente> pacientes = new ArrayList<>();
+
 
     public Medico() {
     }
 
-    public Medico(long id, String nome, LocalDate dataContratacao, BigDecimal salario) {
+    public Medico(Integer id, String nome, LocalDate dataContratacao, BigDecimal salario) {
         this.id = id;
         this.nome = nome;
         this.dataContratacao = dataContratacao;
         this.salario = salario;
     }
 
-    public long getId() {
+    public Medico(MedicoDTO dto) {
+        this.id = dto.getId();
+        this.nome = dto.getNome();
+        this.dataContratacao = dto.getDataContratacao();
+        this.salario = dto.getSalario();
+    }
+
+
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getNome() {
+    public @NotNull @NotBlank String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NotNull @NotBlank String nome) {
         this.nome = nome;
     }
 
@@ -61,11 +80,20 @@ public class Medico {
         this.dataContratacao = dataContratacao;
     }
 
-    public BigDecimal getSalario() {
+    public @NotNull @Digits(integer = 15, fraction = 2) BigDecimal getSalario() {
         return salario;
     }
 
-    public void setSalario(BigDecimal salario) {
+    public void setSalario(@NotNull @Digits(integer = 15, fraction = 2) BigDecimal salario) {
         this.salario = salario;
     }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+    }
+
 }

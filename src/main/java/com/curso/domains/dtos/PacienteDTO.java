@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class PacienteDTO {
 
-    private long id;
+    private Long idPaciente;
 
     @NotNull(message = "O campo nome não pode ser nulo")
     @NotBlank(message = "O campo nome não pode estar vazio")
@@ -21,33 +21,68 @@ public class PacienteDTO {
     private LocalDate dataNascimento;
 
     @NotNull(message = "O campo custoInternacao nao pode ser nulo")
-    @Digits(integer = 15, fraction = 3)
+    @Digits(integer = 15, fraction = 2)
     private BigDecimal custoInternacao;
+
+    @NotNull(message = "O campo Medico é requerido!")
+    private int medico;
+    private String nomeMedico;
+
+    private int status;
 
     public PacienteDTO() {
     }
 
     public PacienteDTO(Paciente paciente) {
-        this.id = paciente.getId();
+        this.idPaciente = paciente.getIdPaciente();
         this.nome = paciente.getNome();
         this.dataNascimento = paciente.getDataNascimento();
         this.custoInternacao = paciente.getCustoInternacao();
+        this.status = paciente.getStatus().getId();
+        this.medico = paciente.getMedico().getId();
+        this.nomeMedico = paciente.getMedico().getNome();
+
     }
 
-    public long getId() {
-        return id;
+    public Long getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
-    public @NotNull(message = "O campo nome não pode ser nulo") @NotBlank(message = "O campo nome não pode estar vazio") String getNome() {
-        return nome;
+    @NotNull(message = "O campo Medico é requerido")
+    public int getMedico() {
+        return medico;
     }
 
-    public void setNome(@NotNull(message = "O campo nome não pode ser nulo") @NotBlank(message = "O campo nome não pode estar vazio") String nome) {
-        this.nome = nome;
+    public void setMedico(@NotNull(message = "O campo Medico é requerido") int medico) {
+        this.medico = medico;
+    }
+
+    public String getNomeMedico(){
+        return nomeMedico;
+    }
+
+    public void setNomeMedico (String nomeMedico ) {
+        this.nomeMedico = nomeMedico;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public @NotNull(message = "O campo custoInternacao nao pode ser nulo") @Digits(integer = 15, fraction = 2) BigDecimal getCustoInternacao() {
+        return custoInternacao;
+    }
+
+    public void setCustoInternacao(@NotNull(message = "O campo custoInternacao nao pode ser nulo") @Digits(integer = 15, fraction = 2) BigDecimal custoInternacao) {
+        this.custoInternacao = custoInternacao;
     }
 
     public LocalDate getDataNascimento() {
@@ -58,11 +93,13 @@ public class PacienteDTO {
         this.dataNascimento = dataNascimento;
     }
 
-    public @NotNull(message = "O campo custoInternacao nao pode ser nulo") @Digits(integer = 15, fraction = 3) BigDecimal getCustoInternacao() {
-        return custoInternacao;
+    public @NotNull(message = "O campo nome não pode ser nulo") @NotBlank(message = "O campo nome não pode estar vazio") String getNome() {
+        return nome;
     }
 
-    public void setCustoInternacao(@NotNull(message = "O campo custoInternacao nao pode ser nulo") @Digits(integer = 15, fraction = 3) BigDecimal custoInternacao) {
-        this.custoInternacao = custoInternacao;
+    public void setNome(@NotNull(message = "O campo nome não pode ser nulo") @NotBlank(message = "O campo nome não pode estar vazio") String nome) {
+        this.nome = nome;
     }
+
+
 }

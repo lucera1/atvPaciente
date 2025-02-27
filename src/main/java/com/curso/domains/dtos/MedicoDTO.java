@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class MedicoDTO {
-    private long id;
+    private Integer id;
 
     @NotNull(message = "O campo nome não pode ser nulo")
     @NotBlank(message = "O campo nome não pode estar vazio")
@@ -20,7 +20,7 @@ public class MedicoDTO {
     private LocalDate dataContratacao;
 
     @NotNull(message = "O campo salario nao pode ser nulo")
-    @Digits(integer = 15, fraction = 3)
+    @Digits(integer = 15, fraction = 2)
     private BigDecimal salario;
 
     public MedicoDTO() {
@@ -33,11 +33,11 @@ public class MedicoDTO {
         this.salario = medico.getSalario();
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,11 +57,12 @@ public class MedicoDTO {
         this.dataContratacao = dataContratacao;
     }
 
-    public @NotNull(message = "O campo salario nao pode ser nulo") @Digits(integer = 15, fraction = 3) BigDecimal getSalario() {
+    public @NotNull(message = "O campo salario nao pode ser nulo") @Digits(integer = 15, fraction = 2) BigDecimal getSalario() {
         return salario;
     }
 
-    public void setSalario(@NotNull(message = "O campo salario nao pode ser nulo") @Digits(integer = 15, fraction = 3) BigDecimal salario) {
+    public void setSalario(@NotNull(message = "O campo salario nao pode ser nulo") @Digits(integer = 15, fraction = 2) BigDecimal salario) {
         this.salario = salario;
     }
+
 }
